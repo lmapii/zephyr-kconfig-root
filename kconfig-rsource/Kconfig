@@ -1,0 +1,14 @@
+mainmenu "Customized Menu Name"
+
+# This folder contains Kconfig files that are supposed to be used with "rsource". It is therefore
+# not allowed to source "Kconfig.zephyr". The Kconfig file that sources this file must source
+# "Kconfig.zephyr" for us since it is considered the root Kconfig file.
+# source "Kconfig.zephyr"
+
+menu "Application Options"
+config USR_FUN
+	bool "Enable usr_fun"
+	default n
+	help
+	  Enables the usr_fun function.
+endmenu

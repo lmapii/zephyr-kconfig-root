@@ -1,0 +1,19 @@
+
+# This configuration allows to enable or disable an extra Zephyr module.
+# E.g., this module then needs to be enabled using CONFIG_DUMMY=y
+config ZEPHYR_DUMMY_MODULE
+	bool
+
+menuconfig DUMMY
+	bool "Dummy support"
+	help
+	  This option enables the Dummy module.
+
+# The USR_FUN symbol is only relevant if this module is active.
+if DUMMY
+config USR_FUN
+	bool "Enable usr_fun"
+	default n
+	help
+	  Enables the usr_fun function.
+endif

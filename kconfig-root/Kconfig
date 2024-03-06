@@ -1,0 +1,34 @@
+# This file is intended to entirely the Kconfig file in the application's root directory.
+# It therefore must also source "Kconfig.zephyr". Failing to do so will actually result in
+# a "KeyError" in the kconfig.py generator script. See below.
+
+mainmenu "Customized Menu Name"
+
+# Commenting the line that sources "Kconfig.zephyr" leads to a very nasty error in the build output
+# which doesn't really give us any details about why the Kconfig parsing fails. Below is the text
+# of the build output in case the source instruction is commented:
+#
+# Merged configuration '/path/to/app_00_replace_root/prj.conf'
+# Traceback (most recent call last):
+#   File "/opt/nordic/ncs/v2.4.0/zephyr/scripts/kconfig/kconfig.py", line 292, in <module>
+#     main()
+#   File "/opt/nordic/ncs/v2.4.0/zephyr/scripts/kconfig/kconfig.py", line 65, in main
+#     if kconf.syms['WARN_DEPRECATED'].tri_value == 2:
+# KeyError: 'WARN_DEPRECATED'
+# CMake Error at /opt/nordic/ncs/v2.4.0/zephyr/cmake/modules/kconfig.cmake:339 (message):
+#   command failed with return code: 1
+# Call Stack (most recent call first):
+#   /opt/nordic/ncs/v2.4.0/nrf/cmake/modules/kconfig.cmake:29 (include)
+#   /opt/nordic/ncs/v2.4.0/zephyr/cmake/modules/zephyr_default.cmake:115 (include)
+#   /opt/nordic/ncs/v2.4.0/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)
+#   /opt/nordic/ncs/v2.4.0/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)
+#   CMakeLists.txt:7 (find_package)
+source "Kconfig.zephyr"
+
+menu "Application Options"
+config USR_FUN
+	bool "Enable usr_fun"
+	default n
+	help
+	  Enables the usr_fun function.
+endmenu

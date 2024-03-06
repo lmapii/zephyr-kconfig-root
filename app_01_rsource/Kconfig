@@ -1,0 +1,19 @@
+# https://docs.zephyrproject.org/latest/build/kconfig/extensions.html
+# rsource is a Kconfig extension allowing to source relative paths.
+#
+# When sourcing multiple Kconfig files we need to be careful where to source "Kconfig.zephyr".
+# The issue is that Kconfig.zephyr can only be sourced _once_, and this is typically done by
+# the root Kconfig file.
+#
+# The root Kconfig file is either "Kconfig.zephyr" provided by Zephyr. If the application provides
+# its own Kconfig file, then that is the root Kconfig file, and it should source "Kconfig.zephyr".
+# If we use "rsource", then we should consider this Kconfig file to be the root and thus we source
+#
+# "Kconfig.zephyr" (not an included/sourced Kconfig file). Otherwise, we might as well use the
+# build variable "KCONFIG_ROOT" to specify a different root directory.
+source "Kconfig.zephyr"
+
+# The benefit is, that we can source multiple Kconfig files
+rsource "../kconfig-rsource/Kconfig"
+rsource "../kconfig-rsource/Kconfig.one"
+rsource "../kconfig-rsource/Kconfig.two"
